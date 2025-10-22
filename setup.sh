@@ -163,31 +163,18 @@ fi
 [ ! -f "youtube_audio_cache.json" ] && echo "{}" > youtube_audio_cache.json
 
 # Create start script
+# Create start script
 if [ "$MINOR_VERSION" -gt 10 ]; then
     cat > start.sh << 'EOF'
 #!/bin/bash
 export PATH="$(pwd)/python310/bin:$PATH"
-python3 app.py &
-sleep 3
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    open http://localhost:7860
-elif command -v xdg-open &> /dev/null; then
-    xdg-open http://localhost:7860
-fi
-wait
+python3 app.py
 EOF
 else
     cat > start.sh << 'EOF'
 #!/bin/bash
 source venv/bin/activate
-python app.py &
-sleep 3
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    open http://localhost:7860
-elif command -v xdg-open &> /dev/null; then
-    xdg-open http://localhost:7860
-fi
-wait
+python app.py
 EOF
 fi
 chmod +x start.sh
