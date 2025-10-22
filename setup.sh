@@ -167,31 +167,40 @@ if [ "$MINOR_VERSION" -gt 10 ]; then
     # Create start.sh
     cat > start.sh << 'EOF'
 #!/bin/bash
-export PATH="$(pwd)/python310/bin:$PATH"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+cd "$SCRIPT_DIR"
+export PATH="$SCRIPT_DIR/python310/bin:$PATH"
 python3 app.py
 EOF
     # Create start.command
     cat > start.command << 'EOF'
 #!/bin/bash
-export PATH="$(pwd)/python310/bin:$PATH"
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+cd "$SCRIPT_DIR"
+export PATH="$SCRIPT_DIR/python310/bin:$PATH"
 python3 app.py
 EOF
 else
     # Create start.sh
     cat > start.sh << 'EOF'
 #!/bin/bash
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+cd "$SCRIPT_DIR"
 source venv/bin/activate
 python app.py
 EOF
     # Create start.command
     cat > start.command << 'EOF'
 #!/bin/bash
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+cd "$SCRIPT_DIR"
 source venv/bin/activate
 python app.py
 EOF
 fi
 chmod +x start.sh
 chmod +x start.command
+
 
 echo "DONE."
 echo "Run './start.sh' to launch."
