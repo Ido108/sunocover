@@ -4,6 +4,10 @@ import os
 import sys
 from pathlib import Path
 from multiprocessing import cpu_count
+
+# Enable MPS fallback for unsupported operations
+os.environ['PYTORCH_ENABLE_MPS_FALLBACK'] = '1'
+
 import torch
 from fairseq import checkpoint_utils
 from scipy.io import wavfile

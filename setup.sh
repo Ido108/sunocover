@@ -99,24 +99,16 @@ fi
 # CRITICAL: Install PyTorch FIRST and LOCK IT
 echo ""
 echo "[6/7] Installing packages..."
-echo ""
-echo "Installing PyTorch..."
-if [ $HAS_CUDA -eq 1 ]; then
-    pip install torch==2.0.1+cu118 torchvision==0.15.2+cu118 torchaudio==2.0.2+cu118 --index-url https://download.pytorch.org/whl/cu118
-    pip install onnxruntime-gpu==1.22.0
-elif [ $HAS_MPS -eq 1 ]; then
-    pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2
-    pip install onnxruntime==1.22.0
-else
-    pip install torch==2.0.1 torchvision==0.15.2 torchaudio==2.0.2
-    pip install onnxruntime==1.22.0
-fi
+
 
 # Install core dependencies from requirements.txt (This replaces all redundant installations)
 echo ""
 echo "Installing core and minimal dependencies..."
-pip install -r requirements.txt --upgrade
-
+if [ $HAS_CUDA -eq 1 ]; then
+    pip install -r requirements.txt --upgrade
+else
+    pip install -r requirements-mac.txt --upgrade
+fi
 # Fairseq minimal deps ONLY (The fairseq line below is missing dependencies in the batch file)
 echo ""
 echo "Installing Fairseq and its minimal dependencies (hydra-core, omegaconf, etc.)..."
@@ -132,9 +124,25 @@ pip install gradio==5.42.0
 # Audio separator minimal deps (only what wasn't in requirements.txt or was manually installed)
 echo ""
 echo "Installing additional audio separation components..."
-pip install --no-deps audio-separator==0.36.1 numpy==1.26.4 torchcrepe
+pip install --no-deps --force-reinstall audio-separator==0.36.1 numpy==1.26.4 torchcrepe
 pip install onnx imageio-ffmpeg
-
+echo ""
+echo "[6/7] Installing packages..."
+echo ""
+echo "Installing PyTorch..."
+echo "Installing PyTorch..."
+if [ $HAS_CUDA -eq 1 ]; then
+    pip install torch==2.0.1+cu118 torchvision==0.15.2+cu118 torchaudio==2.0.2+cu118 --index-url https://download.pytorch.org/whl/cu118
+    pip install onnxruntime-gpu==1.22.0
+elif [ $HAS_MPS -eq 1 ]; then
+    pip uninstall -y torch torchvision torchaudio 2>/dev/null || true
+    pip install torch==2.1.0 torchvision torchaudio
+    pip install onnxruntime==1.22.0
+else
+    pip uninstall -y torch torchvision torchaudio 2>/dev/null || true
+    pip install torch==2.1.0 torchvision torchaudio
+    pip install onnxruntime==1.22.0
+fi
 # Download models
 echo ""
 echo "[7/7] Downloading models..."
