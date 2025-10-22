@@ -163,21 +163,35 @@ fi
 [ ! -f "youtube_audio_cache.json" ] && echo "{}" > youtube_audio_cache.json
 
 # Create start script
-# Create start script
 if [ "$MINOR_VERSION" -gt 10 ]; then
+    # Create start.sh
     cat > start.sh << 'EOF'
 #!/bin/bash
 export PATH="$(pwd)/python310/bin:$PATH"
 python3 app.py
 EOF
+    # Create start.command
+    cat > start.command << 'EOF'
+#!/bin/bash
+export PATH="$(pwd)/python310/bin:$PATH"
+python3 app.py
+EOF
 else
+    # Create start.sh
     cat > start.sh << 'EOF'
+#!/bin/bash
+source venv/bin/activate
+python app.py
+EOF
+    # Create start.command
+    cat > start.command << 'EOF'
 #!/bin/bash
 source venv/bin/activate
 python app.py
 EOF
 fi
 chmod +x start.sh
+chmod +x start.command
 
 echo "DONE."
 echo "Run './start.sh' to launch."
