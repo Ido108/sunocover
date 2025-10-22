@@ -192,21 +192,6 @@ EOF
 fi
 chmod +x start.sh
 
-# Verify
-echo ""
-echo "================================================================"
-echo "Verifying installation..."
-echo "================================================================"
-python -c "import torch; print(f'PyTorch: {torch.__version__}')"
-if [ $HAS_CUDA -eq 1 ]; then
-    python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}')"
-fi
-python -c "import librosa; print(f'Librosa: {librosa.__version__}')"
-python -c "import gradio; print(f'Gradio: {gradio.__version__}')"
-python -c "import fairseq; print('Fairseq: OK')"
-python -c "from audio_separator.separator import Separator; print('Audio Separator: OK')"
-echo "================================================================"
-echo ""
 echo "DONE."
 echo "Run './start.sh' to launch."
 echo ""
