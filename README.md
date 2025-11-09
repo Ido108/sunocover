@@ -1,8 +1,8 @@
-# SUNO Song Processor
+# SUNO Cover Song Processor - PreProcess ANY song for suno upload
 
 ![Screenshot](screenshot.png)
 
-Standalone app for song processing to Bypass uploads restrictions in suno
+Standalone app for song processing to Bypass uploads restrictions in suno. works with direct search (full process including download from youtube and processing the file), youtube urls, or local files.
 
 ## Install
 
