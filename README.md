@@ -6,6 +6,10 @@ Standalone app for song processing to Bypass uploads restrictions in suno
 
 ## Install
 
+### Standalone Windows App
+**Windows:** [Download Installer](https://drive.google.com/file/d/1PTsVYCmu55f8A7dQsd1hijTN1e5DF7yS/view?usp=sharing)
+
+### From Source
 ```bash
 git clone https://github.com/Ido108/sunocover.git
 cd sunocover
