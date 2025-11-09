@@ -1,5 +1,4 @@
-# SUNO Cover Song Processor - 
-## Upload ANY song to suno
+# SUNO Cover Song Processor - Upload ANY song to suno
 
 ![Screenshot](screenshot.png)
 
