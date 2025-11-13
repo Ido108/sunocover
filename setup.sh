@@ -16,7 +16,7 @@ MINOR_VERSION=$(echo $PYTHON_VERSION | cut -d'.' -f2)
 
 if [ "$MINOR_VERSION" -gt 10 ]; then
     echo "System Python is 3.$MINOR_VERSION (too new). Using embedded Python 3.10..."
-    if [ ! -f "python310/bin/python3" ]; then
+    if [ ! -f "python311/bin/python3" ]; then
         echo "Downloading Python 3.10.11 standalone..."
 
         # Download python-build-standalone
@@ -24,19 +24,19 @@ if [ "$MINOR_VERSION" -gt 10 ]; then
             if [[ $(uname -m) == "arm64" ]]; then
                 PYTHON_URL="https://github.com/indygreg/python-build-standalone/releases/download/20230507/cpython-3.10.11+20230507-aarch64-apple-darwin-install_only.tar.gz"
             else
-                PYTHON_URL="https://github.com/indygreg/python-build-standalone/releases/download/20230507/cpython-3.10.11+20230507-x86_64-apple-darwin-install_only.tar.gz"
+                PYTHON_URL="https://github.com/astral-sh/python-build-standalone/releases/download/20230507/cpython-3.11.3+20230507-x86_64-apple-darwin-install_only.tar.gz"
             fi
         else
             PYTHON_URL="https://github.com/indygreg/python-build-standalone/releases/download/20230507/cpython-3.10.11+20230507-x86_64-unknown-linux-gnu-install_only.tar.gz"
         fi
 
-        curl -L "$PYTHON_URL" -o python310.tar.gz
-        mkdir -p python310
-        tar -xzf python310.tar.gz -C python310 --strip-components=1
-        rm python310.tar.gz
+        curl -L "$PYTHON_URL" -o python311.tar.gz
+        mkdir -p python311
+        tar -xzf python311.tar.gz -C python311 --strip-components=1
+        rm python311.tar.gz
         echo "Embedded Python 3.10.11 installed"
     fi
-    PYTHON_CMD="python310/bin/python3"
+    PYTHON_CMD="python311/bin/python3"
     echo "Using embedded Python 3.10.11"
 else
     echo "Using system Python $PYTHON_VERSION"
@@ -83,7 +83,7 @@ echo ""
 echo "[5/7] Setting up Python environment..."
 if [ "$MINOR_VERSION" -gt 10 ]; then
     echo "Using standalone Python 3.10 directly (no venv needed)"
-    export PATH="$(pwd)/python310/bin:$PATH"
+    export PATH="$(pwd)/python311/bin:$PATH"
     python3 -m pip install pip==24.0 --quiet
 else
     if [ ! -d "venv" ]; then
@@ -169,7 +169,7 @@ if [ "$MINOR_VERSION" -gt 10 ]; then
 #!/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$SCRIPT_DIR"
-export PATH="$SCRIPT_DIR/python310/bin:$PATH"
+export PATH="$SCRIPT_DIR/python311/bin:$PATH"
 python3 app.py
 EOF
     # Create start.command
@@ -177,7 +177,7 @@ EOF
 #!/bin/bash
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
 cd "$SCRIPT_DIR"
-export PATH="$SCRIPT_DIR/python310/bin:$PATH"
+export PATH="$SCRIPT_DIR/python311/bin:$PATH"
 python3 app.py
 EOF
 else
